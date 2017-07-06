@@ -1,0 +1,39 @@
+@import "../const/css/material";
+@import '~@angular/material/theming';
+
+
+$defaultColor: #0D47A1;
+
+
+.form-group{
+  display: flex;
+  justify-content: center;
+}
+
+.container-material{
+  /* position: absolute; */
+  display: block;
+  /* margin: 0; */
+  margin: 10vw auto;
+  background: #fff;
+  /* max-height: 100vh; */
+  padding: 3rem 5rem 1rem;
+  border-radius: 1px;
+  width: 42rem;
+  /* width: 100%; */
+  /* left: 30%; */
+  /* top: 30%; */
+}
+
+h1{
+  color: $defaultColor;
+}
+
+button{
+  background-color: $defaultColor;
+  color: white;
+}
+
+#shest::-webkit-inner-spin-button {
+  display: none;
+}

@@ -1,0 +1,32 @@
+@import "../style";
+header{
+  padding: 4px;
+
+  font-size: 28px;
+  color: white;
+  background-color: $defaultColor;
+  border-bottom: 1px solid white;
+  div{
+    margin-left: 1%;
+    display: flex;
+    align-items: center;
+  }
+
+  md-icon{
+    cursor: pointer;
+    color: white;
+    font-size: 28px;
+  }
+  md-icon:hover{
+    color: wheat;
+  }
+
+  .is-collapse{
+    margin-left: 13%;
+  }
+
+  .logout{
+    position: absolute;
+    right: 1em;
+  }
+}

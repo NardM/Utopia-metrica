@@ -1,0 +1,17 @@
+<div class="main">
+    <div class="left-bar" [class.isCollapsed]="isMenuCollapsed">
+        <md-nav-list>
+            <a md-list-item
+               *ngFor="let link of navLinks"
+               [routerLink]="link.href"
+               routerLinkActive="active" >
+                <md-icon>{{link.icon}}</md-icon>
+                {{ link.label }}
+            </a>
+            <md-divider></md-divider>
+        </md-nav-list>
+    </div>
+    <div class="main-outlet" [class.isMainOutlet]="isMenuCollapsed">
+        <ng-content></ng-content>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+$Caviar: CaviarDreamsRegular, serif;
+
+.fields_group {
+  margin: 2.5rem 4rem 1rem;
+  float: left;
+
+  label {
+    font-family: $Caviar;
+    /*padding-right: 1em;*/
+   /* float: left;*/
+  }
+
+  .center {
+    padding-left: 6.5em;
+  }
+
+  nav {
+    font-family: $Caviar;
+    text-align: center;
+  }
+}
+
+.field {
+  font-family: $Caviar;
+  clear: both;
+  text-align: right;
+}
+
+/*.selectComponent{
+  font-family: $Caviar;
+  margin-left: 4em;
+  width: 18em;
+}*/

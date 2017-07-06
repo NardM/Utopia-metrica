@@ -31,6 +31,23 @@ import { XLargeDirective } from './home/x-large';
 
 import '../styles/styles.scss';
 import '../styles/headings.css';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+
+
+
+import 'hammerjs';
+import {ClientService} from "./metrica/service/client.service";
+import {BaThemeSpinner} from "./service/baThemeSpinner.service";
+import {AuthService} from "./guard/auth.service";
+import {AuthGuardLogin} from "./login/LoginGuard";
+import {AuthGuard} from "./guard/auth-guard.service";
+import {ConstService} from "./const/http/service-const.service";
+import {TokenService} from "./service/token.serviece";
+import {LoginService} from "./login/login.service";
+import {MaterialModule} from "@angular/material";
+import {LoginComponent} from "./login/login.component";
+
+
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -51,10 +68,8 @@ type StoreType = {
   bootstrap: [ AppComponent ],
   declarations: [
     AppComponent,
-    AboutComponent,
-    HomeComponent,
     NoContentComponent,
-    XLargeDirective
+    LoginComponent,
   ],
   /**
    * Import Angular's modules.
@@ -63,14 +78,24 @@ type StoreType = {
     BrowserModule,
     FormsModule,
     HttpModule,
-    RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules }),
+    BrowserAnimationsModule,
+    MaterialModule
   ],
   /**
    * Expose our Services and Providers into Angular's dependency injection.
    */
   providers: [
     ENV_PROVIDERS,
-    APP_PROVIDERS
+    APP_PROVIDERS,
+    LoginService,
+    TokenService,
+    ConstService,
+    AuthGuard,
+    AuthGuardLogin,
+    AuthService,
+    BaThemeSpinner,
+    ClientService
   ]
 })
 export class AppModule {
