@@ -16,6 +16,10 @@
 
         <md-autocomplete #auto="mdAutocomplete"
                          [displayWith]="displayFn">
+          <md-option (onSelectionChange)="onCity($event, defaultCity)"
+                     [value]="defaultCity">
+            {{defaultCity.name}}
+          </md-option>
           <md-option *ngFor="let state of filteredStates | async"
                      (onSelectionChange)="onCity($event, state)"
                      [value]="state">

@@ -49,11 +49,15 @@ export class BusinessMapsComponent implements OnInit {
     public like: string = '';
     @ViewChild ('sidenav')
     sidenav: MdSidenav;
-
+    public defaultCity: City;
 
     constructor(private companyService: CompanyService,
                 private _state: BaThemeSpinner,
                 private service: ConstService) {
+        this.defaultCity = <City>{
+            name: 'Все города',
+            id: 0
+        }
         this.stateCtrl = new FormControl();
             this.filteredStates = this.stateCtrl.valueChanges
                 .startWith(null)
@@ -136,7 +140,7 @@ export class BusinessMapsComponent implements OnInit {
         self.latitude = 55.7993562;
         self.longitude = 49.1059988;
         self.setCurrentPosition();
-        let categories: Array<{ name: string, id: number }> = [];
+        let categories: Array<{ name: string, id: number }> = [{name: 'Все категории', id: 0}];
         self.companyService.getCategories()
             .then((res: CategoryI[]) => {
                 res.map(category => {
