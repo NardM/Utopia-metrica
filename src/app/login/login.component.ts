@@ -8,8 +8,8 @@ import {
 } from '@angular/core';
 import { AppState } from './app.service';
 import { ActivatedRoute, Router }  from '@angular/router';
-import { TokenService } from '../manager/http/token.serviece';
-import { LoginService } from './login.service';
+import {LoginService} from "./login.service";
+import {TokenService} from "../service/token.serviece";
 
 /**
  * App Component
@@ -59,7 +59,7 @@ export class LoginComponent {
                         if (a.success) {
                             this.step = LoginStep.Success;
                             this.textButton = 'Успешно';
-                            this.router.navigate(['manager']);
+                            this.router.navigate(['metric']);
                         }
                         else {
                             // this.step = LoginStep.BrokenConfirm;

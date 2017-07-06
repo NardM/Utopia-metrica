@@ -11,8 +11,8 @@ import {AuthGuard} from "./guard/auth-guard.service";
 export const ROUTES: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
-    path: 'manager',
-    loadChildren: 'app/manager/manager.module#ManagerModule',
+    path: 'metric',
+    loadChildren: 'app/metrica/metric.module#MetricModule',
     canActivate: [AuthGuard],
   },
   {

@@ -1,14 +1,14 @@
 
-<sebm-google-map   [scrollwheel]="true" [zoom]="zoom" [styles]="mapCustomStyles">
+<sebm-google-map   [scrollwheel]="true" [zoom]="zoom" >
 
   <sebm-google-map-marker  *ngFor="let company of companies"
                            [latitude]="company.address.location.lat"
                            [longitude]="company.address.location.lng">
     <sebm-google-map-info-window>
       <strong *ngIf="company.company"
-              style="color: black">{{company.company.name}}</strong>
+              style="color: black">{{company.company.name}} {{company.phone}}</strong>
       <strong *ngIf="company.master"
-              style="color: black">{{company.master.first_name}} {{company.master.last_name}}</strong>
+              style="color: black">{{company.master.first_name}} {{company.master.last_name}} {{company.phone}}</strong>
     </sebm-google-map-info-window>
   </sebm-google-map-marker>
 

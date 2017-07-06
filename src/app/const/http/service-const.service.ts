@@ -8,6 +8,7 @@ import { Http, Response } from '@angular/http';
 import { Headers } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
+import 'rxjs/add/operator/mergeMap';
 import { Observable } from "rxjs/Observable";
 import {Observer} from "rxjs/Observer";
 import {Consts} from "../app-const";
@@ -16,7 +17,6 @@ import {TokenService} from "../../service/token.serviece";
 import {EmptyAnswer} from "../../metrica/model/Answer";
 import {createImage, resizeImage} from "../../metrica/service/utils";
 import {ImageResult, ResizeOptions} from "../../metrica/model/interfaces";
-import 'rxjs/add/operator/mergeMap'
 
 @Injectable()
 export class ConstService {

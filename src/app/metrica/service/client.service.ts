@@ -10,6 +10,8 @@ import {Consts} from "../../const/app-const";
 import {ConstService} from "../../const/http/service-const.service";
 import { Logout } from '../../login/login.service';
 import { Cookie } from 'ng2-cookies';
+import {ClientInterface} from  "../model/client"
+import Account = ClientInterface.Account;
 
 @Injectable()
 export class ClientService {

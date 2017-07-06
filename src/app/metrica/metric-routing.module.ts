@@ -30,7 +30,7 @@ const managerRoutes: Routes = [
         RouterModule
     ]
 })
-export class ManagerRoutingModule {}
+export class MetricRoutingModule {}
 
 
 /*

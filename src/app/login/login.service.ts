@@ -3,9 +3,9 @@ import {TokenYouService} from "./token-service";
 import {Headers, Http} from "@angular/http";
 import {Cookie} from "ng2-cookies";
 import {ConstService} from "../const/http/service-const.service";
-import {EmptyAnswer} from "../manager/http/answer";
-import {TokenService} from "../manager/http/token.serviece";
 import {Consts} from "../const/app-const";
+import {TokenService} from "../service/token.serviece";
+import {EmptyAnswer} from "../metrica/model/Answer";
 
 export interface Logout{
     device_id: string;

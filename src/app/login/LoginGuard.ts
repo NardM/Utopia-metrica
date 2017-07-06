@@ -49,7 +49,7 @@ export class AuthGuardLogin implements CanActivate, CanActivateChild, CanLoad {
         // Create a dummy session id
 
         // Navigate to the login page with extras
-        this.router.navigate(['manager']);
+        this.router.navigate(['metric']);
 
         return false;
     }

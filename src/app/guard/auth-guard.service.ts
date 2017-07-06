@@ -12,7 +12,9 @@ import {
 }                           from '@angular/router';
 import { AuthService }      from './auth.service';
 import {Cookie} from "ng2-cookies/src/services/cookie";
-import { ClientService } from '../manager/http/client.service';
+import {ClientService} from "../metrica/service/client.service";
+import {ClientInterface} from  "../metrica/model/client"
+import Account = ClientInterface.Account;
 
 @Injectable()
 export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
@@ -40,14 +42,12 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
   }
 
   checkLogin(url: string): boolean {
-    debugger;
     if (Cookie.get('login_token') !== null &&
         Cookie.get('login_token') !== 'null'&&
         Cookie.get('login_token') !== undefined) {
       if (this.managerSuccess === undefined) {
         this.guard.getAccount()
             .then(res => {
-              debugger;
               if (res.roles.indexOf('manager') !== -1 || res.roles.indexOf('admin') !== -1) {
                 this.managerSuccess = true;
                 return true;

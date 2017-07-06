@@ -7,10 +7,10 @@
 import { Injectable }    from '@angular/core';
 
 import 'rxjs/add/operator/toPromise';
-import { Consts } from '../../../const/app-const'
 import {count} from "rxjs/operator/count";
 import {ConstService} from "../../const/http/service-const.service";
 import {Category, CompanyI} from "../model/company";
+import {Consts} from "../../const/app-const";
 
 @Injectable()
 export class CompanyService {

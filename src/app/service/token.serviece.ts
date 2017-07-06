@@ -1,12 +1,12 @@
 import {Injectable} from "@angular/core";
 import {Headers, Http} from "@angular/http";
 import "rxjs/add/operator/toPromise";
-import {GUID} from "../../guid/guid";
-import {Consts} from "../../const/app-const";
 import {Cookie} from "ng2-cookies/ng2-cookies";
 import {Observable} from "rxjs/Observable";
 import { Device } from 'ng2-device-detector';
 import { Router } from '@angular/router';
+import {Consts} from "../const/app-const";
+import {GUID} from "../guid/guid";
 
 @Injectable()
 export class TokenService {

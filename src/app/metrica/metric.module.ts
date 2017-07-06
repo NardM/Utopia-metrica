@@ -3,7 +3,7 @@
  */
 import { NgModule }       from '@angular/core';
 import { CommonModule }   from '@angular/common';
-import {ManagerRoutingModule}     from './metric-routing.module'
+import {MetricRoutingModule}     from './metric-routing.module'
 import {UserComponent} from "./metric.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {JsonpModule, HttpModule} from "@angular/http";
@@ -16,6 +16,7 @@ import {LeftBarComponent} from "./theme/left-bar/left-bar.component";
 import {CompanyService} from "./service/company.service";
 import {ClientService} from "./service/client.service";
 import {BaThemeSpinner} from "../service/baThemeSpinner.service";
+import {LoadScrollComponent} from "../components/load-scroll/load-scroll.component";
 
 
 @NgModule({
@@ -25,7 +26,7 @@ import {BaThemeSpinner} from "../service/baThemeSpinner.service";
     JsonpModule,
     ReactiveFormsModule,
     CommonModule,
-    ManagerRoutingModule,
+    MetricRoutingModule,
     AgmCoreModule.forRoot({
       apiKey: "AIzaSyCxiuwoUIExQq3LaN5Kj-vNBDeyus6-t7U",
       libraries: ["geometry","places"],
@@ -38,7 +39,7 @@ import {BaThemeSpinner} from "../service/baThemeSpinner.service";
     BusinessMapsComponent,
     TopBarComponent,
     LeftBarComponent,
-
+    LoadScrollComponent
 
   ],
   entryComponents: [
@@ -52,7 +53,7 @@ import {BaThemeSpinner} from "../service/baThemeSpinner.service";
   exports: []
 
 })
-export class ManagerModule {}
+export class MetricModule {}
 
 
 /*
