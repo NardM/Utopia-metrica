@@ -38,36 +38,24 @@ export class CompanyService {
     return this.constService.get<CompanyI[]>(url, 'companies');
   }
 
-  getCompanyID(id: number | string) {
-    let url = this.companyUrl + '/'+id;
-    return this.constService.get<CompanyI>(url);
-  }
-
-  postCompanyCategory(companyId: number, categoryId) {
-    let url = this.companyUrl + '/' + companyId + '/category/' + categoryId;
-    return this.constService.postSingle(url);
-  }
-
-  getCompanyCategory(companyId: number) {
-    let url = this.companyUrl + '/' + companyId + '/category';
-    return this.constService.get<Category[]>(url, 'categories');
-  }
-
-  search(term: string){
-    let url =this.comapnySearchUrl+term;
-    return this.constService.search<CompanyI>(url, 'companies');
-  }
-
-  deleteCompany(companyId: number) {
-    let url = this.companyUrl + '/' + companyId;
-    return this.constService.delete(url);
-  }
-
-  putCompany(company: CompanyI) {
-    let url = this.companyUrl + '/' + company.id;
-    return this.constService.put<CompanyI>(url, company);
+  getCategories(): Promise<CategoryI[]>{
+    let url: string = `${Consts.baseURL}manage/v1/category`;
+    return this.constService.get<CategoryI[]>(url, 'categories');
   }
 
 
-
+}
+export interface CategoryI {
+  id: number;
+  name: string;
+  form_id: number;
+  img?: string;
+  key_words?: string[];
+  from_color: string;
+  subcategories: CategoryI[];
+  subcategoriesBool: boolean;
+  to_color: string;
+  root: boolean;
+  sequence: number;
+  company: boolean;
 }

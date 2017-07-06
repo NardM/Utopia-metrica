@@ -7,13 +7,21 @@
 
   <sebm-google-map-marker  *ngFor="let company of companies"
                            [latitude]="company.address.location.lat"
+                           [iconUrl]="company.logo"
                            [longitude]="company.address.location.lng">
     <sebm-google-map-info-window>
-      <strong *ngIf="company.company"
-              style="color: black">{{company.company.name}} {{company.phone}}</strong>
-      <strong *ngIf="company.master"
-              style="color: black">{{company.master.first_name}} {{company.master.last_name}} {{company.phone}}</strong>
-    </sebm-google-map-info-window>
+      <div  style="color: black">
+        <div *ngIf="company.company">
+          <div><b>Компания:</b> {{company.company.name}}</div>
+          <div><b>Телефон:</b>  {{company.phone}}</div>
+        </div>
+        <div *ngIf="company.master">
+          <div><b>Мастер:</b>  {{company.master.first_name}} {{company.master.last_name}}</div>
+          <div><b>Телефон:</b>  {{company.phone}}</div>
+        </div>
+        <div><b>Категории:</b>  {{company.category_string}}</div>
+      </div>
+        </sebm-google-map-info-window>
   </sebm-google-map-marker>
 
 
