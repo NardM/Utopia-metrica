@@ -23,6 +23,16 @@ export class BaThemeSpinner {
     this._elementManager.style['display'] = 'block';
   }
 
+  public showGeneric(id: string):void {
+    this._elementManager = document.getElementById(id);
+    this._elementManager.style['display'] = 'block';
+  }
+
+  public hideGeneric(id: string):void {
+    this._elementManager = document.getElementById(id);
+    this._elementManager.style['display'] = 'none';
+  }
+
   public hide(delay:number = 0):void {
     setTimeout(() => {
       this._element.style['display'] = 'none';

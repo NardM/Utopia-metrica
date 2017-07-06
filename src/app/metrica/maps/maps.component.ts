@@ -57,7 +57,7 @@ export class BusinessMapsComponent implements OnInit {
         this.defaultCity = <City>{
             name: 'Все города',
             id: 0
-        }
+        };
         this.stateCtrl = new FormControl();
             this.filteredStates = this.stateCtrl.valueChanges
                 .startWith(null)
@@ -93,7 +93,9 @@ export class BusinessMapsComponent implements OnInit {
 
     public getCompanies(): void {
         let self = this;
+
         self._state.showManager();
+        self._state.hideGeneric('main');
         self.companies = [];
         self.companyService.getCompanies(0, 300, self.cityID===undefined?0:self.cityID,
             self.categoryID===undefined?0:self.categoryID, self.like)
@@ -126,6 +128,7 @@ export class BusinessMapsComponent implements OnInit {
                     i++;
                 });
                 self._state.hideManager();
+                self._state.showGeneric('main');
                 self.companiesBack = self.companies;
             });
     }
