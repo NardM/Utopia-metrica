@@ -11,7 +11,8 @@ import {count} from "rxjs/operator/count";
 import {ConstService} from "../../const/http/service-const.service";
 import {Category, CompanyI} from "../model/company";
 import {Consts} from "../../const/app-const";
-
+import 'rxjs/add/operator/startWith';
+import 'rxjs/add/operator/map';
 @Injectable()
 export class CompanyService {
 
@@ -43,6 +44,11 @@ export class CompanyService {
     return this.constService.get<CategoryI[]>(url, 'categories');
   }
 
+  getCity(): Promise<Cities>{
+    let url: string = `${Consts.baseURL}v1/city`;
+    return this.constService.get<Cities>(url);
+  }
+
 
 }
 export interface CategoryI {
@@ -58,4 +64,19 @@ export interface CategoryI {
   root: boolean;
   sequence: number;
   company: boolean;
+}
+
+export interface Location {
+  lat: number;
+  lng: number;
+}
+
+export interface City {
+  id: number;
+  name: string;
+  location: Location;
+}
+
+export interface Cities {
+  cities: City[];
 }
