@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from "@angular/core";
+import {Component, Inject, OnInit, ViewChild} from "@angular/core";
 import {LatLngBoundsLiteral, LatLngLiteral} from "angular2-google-maps/core";
 import {RequestInterface} from "../../models/Request";
 import {MD_DIALOG_DATA, MdDialogRef} from "@angular/material";
@@ -24,6 +24,14 @@ import 'rxjs/add/operator/map';
 
 
 export class BusinessMapsComponent implements OnInit {
+    get categoryID(): number {
+        return this._categoryID;
+    }
+    set categoryID(value: number) {
+        this._categoryID = value;
+        this.getCompanies()
+    }
+
 
     public latitude: number;
     public longitude: number;
@@ -34,23 +42,78 @@ export class BusinessMapsComponent implements OnInit {
     protected cities: City[]= [];
     public stateCtrl: FormControl;
     public filteredStates: Observable<City[]>;
+    private _categoryID: number = 0;
+    private cityID: number = 0;
+    public like: string = '';
+    @ViewChild (BusinessMapsComponent)
+    businessMaps: BusinessMapsComponent;
+
 
     constructor(private companyService: CompanyService,
                 private service: ConstService) {
         this.stateCtrl = new FormControl();
-
             this.filteredStates = this.stateCtrl.valueChanges
                 .startWith(null)
                 .map(user => user && typeof user === 'object' ? user.name : user)
                 .map(name => name ? this.filter(name) : this.cities.slice());
     }
-    protected filter(name: string): City[] {
+    public filter(name: string): City[] {
         return this.cities.filter(option => new RegExp(`^${name}`, 'gi').test(option.name));
     }
 
-    protected displayFn(city: City): string| City {
+    public displayFn(city: City): string| City {
+        let self = this;
+        if (city !== null) {
+            self.cityID = city.id;
+        }
         return city ? city.name : city;
     }
+
+    public onCity(event, city: City){
+        debugger;
+        this.cityID = city.id;
+        this.getCompanies();
+    }
+
+    public getCompanies(): void {
+        let self = this;
+        self.companies = [];
+        self.companyService.getCompanies(0, 300, self.cityID===undefined?0:self.cityID,
+            self.categoryID===undefined?0:self.categoryID, self.like)
+            .then(res => {
+                let i: number = 0;
+                res.map(company => {
+                    if (company.address.location == null ||
+                        company.address.location === undefined) {
+                        res.splice(i, 1);
+                    }
+                    i++;
+                });
+                i = 0;
+                res.map(company => {
+                    if (company.address.location.lng !== null &&
+                        company.address.location.lng !== undefined &&
+                        company.address.location.lat !== null &&
+                        company.address.location.lat !== undefined) {
+                        let categoriesI: string = '';
+                        company.categories.map(category => {
+                            self.categories.map(r => {
+                                if (r.id === category) {
+                                    categoriesI += r.name + ', ';
+                                }
+                            });
+                        });
+                        company.category_string = categoriesI;
+                        self.companies.push(company);
+                    }
+                    i++;
+                });
+                self.companiesBack = self.companies;
+            });
+    }
+
+
+
 
     ngOnInit() {
         //set google maps defaults
@@ -82,51 +145,7 @@ export class BusinessMapsComponent implements OnInit {
                     })
             })
             .then(() => {
-                self.companyService.getCompanies(0, 300)
-                    .then(res => {
-                        let i: number = 0;
-                        res.map(company => {
-                            if (company.address.location == null ||
-                                company.address.location === undefined) {
-                                res.splice(i, 1);
-                            }
-                            i++;
-                        });
-                        i = 0;
-                        res.map(company => {
-                            if (company.address.location.lng !== null &&
-                                company.address.location.lng !== undefined &&
-                                company.address.location.lat !== null &&
-                                company.address.location.lat !== undefined) {
-                                let categoriesI: string = '';
-                                company.categories.map(category => {
-                                    categories.map(r => {
-                                        if (r.id === category) {
-                                            categoriesI += r.name + ', ';
-                                        }
-                                    });
-                                });
-                                company.category_string = categoriesI;
-                                self.companies.push(company);
-                                /*self.getIcon(company)
-                                 .subscribe(item => {
-                                 debugger;
-                                 let categoriesI: string = '';
-                                 company.categories.map(category => {
-                                 categories.map(r=>{
-                                 if (r.id === category){
-                                 categoriesI+= r.name+', ';
-                                 }
-                                 });
-                                 });
-                                 company.category_string = categoriesI;
-                                 self.companies.push(item);
-                                 })*/
-                            }
-                            i++;
-                        });
-                        self.companiesBack = self.companies;
-                    });
+                self.getCompanies();
             })
     }
 

@@ -25,17 +25,14 @@ export class CompanyService {
   constructor(private constService: ConstService) {
   }
 
-  getCompanies(offset: number, count?: number) {
+  getCompanies(offset: number, count: number, cityID: number, categoryID: number, like: string) {
     let url: string;
-    if (this.categoryID) {
-      url = this.companyUrl + '?count=50&offset=' + offset + '&category_filter=' + this.categoryID;
-    }
-    else {
-      url = this.companyUrl + '?count=50&offset=' + offset;
-    }
-    if (count){
-      url = `${this.companyUrl}?count=${count}&offset=${offset}`;
-    }
+    url = this.companyUrl + '?' +
+        (like === '' ? '' : 'like=' + like) +
+        (like === '' ? 'count=' + count : '&count=' + count ) +
+        '&offset=' + offset +
+        (categoryID === 0 ? '' : '&category_filter=' + categoryID) +
+        (cityID === 0 ? '' : '&city_id=' + cityID);
     return this.constService.get<CompanyI[]>(url, 'companies');
   }
 

@@ -4,7 +4,8 @@
       <div class="title-actions">
         Фильтр
       </div>
-      <div class="cities">
+      <div *ngIf="cities"
+           class="cities">
         <md-input-container>
           <input mdInput
                  placeholder="Город"
@@ -15,13 +16,15 @@
         <md-autocomplete #auto="mdAutocomplete"
                          [displayWith]="displayFn">
           <md-option *ngFor="let state of filteredStates | async"
+                     (onSelectionChange)="onCity($event, state)"
                      [value]="state">
             {{ state.name }}
           </md-option>
         </md-autocomplete>
       </div>
       <div class="categories">
-        <md-select placeholder="Категория">
+        <md-select placeholder="Категория"
+                   [(ngModel)]="categoryID">
           <md-option *ngFor="let category of categories"
                      [value]="category.id">
             {{ category.name }}
