@@ -32,7 +32,7 @@ export class BusinessMapsComponent implements OnInit {
     private categories: CategoryI[] = [];
     protected cities: City[]= [];
     public stateCtrl: FormControl;
-    public filteredStates: any;
+    public filteredStates: Observable<City[]>;
 
     constructor(private companyService: CompanyService,
                 private service: ConstService) {
@@ -40,22 +40,15 @@ export class BusinessMapsComponent implements OnInit {
 
             this.filteredStates = this.stateCtrl.valueChanges
                 .startWith(null)
-                .map(name => this.filterStates(name));
+                .map(user => user && typeof user === 'object' ? user.name : user)
+                .map(name => name ? this.filter(name) : this.cities.slice());
+    }
+    protected filter(name: string): City[] {
+        return this.cities.filter(option => new RegExp(`^${name}`, 'gi').test(option.name));
     }
 
-    protected filterStates(val: string | City) {
-        debugger;
-        if (typeof val === 'string'){
-            return val ?
-                this.cities.filter(s => s.name.toLowerCase().indexOf(val.toLowerCase()) === 0)
-                : this.cities;
-        }
-        if (typeof  val=== 'object'){
-            return val ?
-                this.cities.filter(s => s.name.toLowerCase().indexOf(val.name.toLowerCase()) === 0)
-                : this.cities;
-        }
-
+    protected displayFn(city: City): string| City {
+        return city ? city.name : city;
     }
 
     ngOnInit() {
