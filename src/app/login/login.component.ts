@@ -39,11 +39,9 @@ export class LoginComponent {
 
     public postSub(phone: string, code?: number): void {
         let self = this;
-        debugger;
         switch (this.step) {
             case LoginStep.PhoneInput:
                 this.loginService.login(phone).then(a => {
-                    debugger;
                     self.step = LoginStep.CodeInput;
                     self.errorCode = false;
                     self.successBool = true;
@@ -55,7 +53,6 @@ export class LoginComponent {
                 this.step = LoginStep.ConfirmRequest;
                 this.loginService.confirm(phone, code)
                     .then(a => {
-                        debugger;
                         if (a.success) {
                             this.step = LoginStep.Success;
                             this.textButton = 'Успешно';

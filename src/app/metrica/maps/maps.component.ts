@@ -43,6 +43,7 @@ export class BusinessMapsComponent implements OnInit {
         //set google maps defaults
         this.zoom = 12;
         let self = this;
+        self.setCurrentPosition();
         self.companyService.getCompanies(0, 300)
             .then(res => {
                 let i: number = 0;
@@ -69,6 +70,7 @@ export class BusinessMapsComponent implements OnInit {
 
             });
     }
+
     private   setCurrentPosition() {
         if ("geolocation" in navigator) {
             navigator.geolocation.getCurrentPosition((position) => {
@@ -79,4 +81,5 @@ export class BusinessMapsComponent implements OnInit {
             });
         }
 
+    }
 }

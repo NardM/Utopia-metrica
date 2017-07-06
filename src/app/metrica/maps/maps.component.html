@@ -1,5 +1,9 @@
 
-<sebm-google-map   [scrollwheel]="true" [zoom]="zoom" >
+<sebm-google-map
+                   [scrollwheel]="true"
+                   [zoom]="zoom"
+                   [latitude]="latitude"
+                   [longitude]="longitude" >
 
   <sebm-google-map-marker  *ngFor="let company of companies"
                            [latitude]="company.address.location.lat"

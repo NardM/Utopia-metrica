@@ -16,6 +16,7 @@ const managerRoutes: Routes = [
                 path: '',
                 children: [
                   { path: '', component: BusinessMapsComponent },
+                  { path: 'maps', component: BusinessMapsComponent },
                 ]
             }
         ]

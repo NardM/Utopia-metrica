@@ -32,19 +32,7 @@ export class LeftBarComponent {
 
     public navLinks: { href: string, label: string, icon: string }[] = [
         {
-            href: './chat', label: 'ЧАТ', icon: 'chat'
-        },
-        {
-            href: './new-requests', label: 'НОВЫЕ ЗАЯВКИ', icon: 'fiber_new'
-        },
-        {
-            href: './published-requests', label: 'ОПУБЛИКОВАННЫЕ', icon: 'publish'
-        },
-        {
-            href: './accepted-requests', label: 'ПРИНЯТЫЕ ЗАЯВКИ  ', icon: 'confirmation_number'
-        },
-        {
-            href: './archive-requests', label: 'АРХИВ  ', icon: 'archive'
+            href: './maps', label: 'Карта', icon: 'map'
         },
     ];
 }
