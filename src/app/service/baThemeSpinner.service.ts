@@ -19,7 +19,8 @@ export class BaThemeSpinner {
   }
 
   public showManager():void {
-    this._element.style['display'] = 'block';
+    this._elementManager = document.getElementById(this._selectorManager);
+    this._elementManager.style['display'] = 'block';
   }
 
   public hide(delay:number = 0):void {

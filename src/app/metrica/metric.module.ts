@@ -17,6 +17,7 @@ import {CompanyService} from "./service/company.service";
 import {ClientService} from "./service/client.service";
 import {BaThemeSpinner} from "../service/baThemeSpinner.service";
 import {LoadScrollComponent} from "../components/load-scroll/load-scroll.component";
+import {LoadComponentComponent} from "../components/load-component/load-component.component";
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import {LoadScrollComponent} from "../components/load-scroll/load-scroll.compone
   ],
   declarations: [
     UserComponent,
+    LoadComponentComponent  ,
     BusinessMapsComponent,
     TopBarComponent,
     LeftBarComponent,

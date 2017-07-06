@@ -1,7 +1,7 @@
-import {Component, Inject, OnInit, ViewChild} from "@angular/core";
+import {Component, ElementRef, Inject, OnInit, ViewChild} from "@angular/core";
 import {LatLngBoundsLiteral, LatLngLiteral} from "angular2-google-maps/core";
 import {RequestInterface} from "../../models/Request";
-import {MD_DIALOG_DATA, MdDialogRef} from "@angular/material";
+import {MD_DIALOG_DATA, MdDialogRef, MdSidenav} from "@angular/material";
 import {Category, Companies, CompanyI} from "../model/company";
 import {CategoryI, City, CompanyService} from "../service/company.service";
 import {ConstService} from "../../const/http/service-const.service";
@@ -12,6 +12,7 @@ declare var google:any;
 
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/map';
+import {BaThemeSpinner} from "../../service/baThemeSpinner.service";
 
 
 @Component({
@@ -29,6 +30,7 @@ export class BusinessMapsComponent implements OnInit {
     }
     set categoryID(value: number) {
         this._categoryID = value;
+        this.sidenav.close();
         this.getCompanies()
     }
 
@@ -45,11 +47,12 @@ export class BusinessMapsComponent implements OnInit {
     private _categoryID: number = 0;
     private cityID: number = 0;
     public like: string = '';
-    @ViewChild (BusinessMapsComponent)
-    businessMaps: BusinessMapsComponent;
+    @ViewChild ('sidenav')
+    sidenav: MdSidenav;
 
 
     constructor(private companyService: CompanyService,
+                private _state: BaThemeSpinner,
                 private service: ConstService) {
         this.stateCtrl = new FormControl();
             this.filteredStates = this.stateCtrl.valueChanges
@@ -72,11 +75,21 @@ export class BusinessMapsComponent implements OnInit {
     public onCity(event, city: City){
         debugger;
         this.cityID = city.id;
+        this.sidenav.close();
+        this.getCompanies();
+    }
+
+    protected onLikeName(name: string): void {
+        if (name === '' || name == null) {
+            return;
+        }
+        this.like = name;
         this.getCompanies();
     }
 
     public getCompanies(): void {
         let self = this;
+        self._state.showManager();
         self.companies = [];
         self.companyService.getCompanies(0, 300, self.cityID===undefined?0:self.cityID,
             self.categoryID===undefined?0:self.categoryID, self.like)
@@ -108,6 +121,7 @@ export class BusinessMapsComponent implements OnInit {
                     }
                     i++;
                 });
+                self._state.hideManager();
                 self.companiesBack = self.companies;
             });
     }
