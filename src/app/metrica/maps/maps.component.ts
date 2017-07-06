@@ -29,7 +29,8 @@ export class BusinessMapsComponent implements OnInit {
     public longitude: number;
     public zoom: number;
     public companies: CompanyI[] = [];
-    private categories: CategoryI[] = [];
+    public companiesBack: CompanyI[] = [];
+    private categories: Array<{ name: string, id: number }> = [];
     protected cities: City[]= [];
     public stateCtrl: FormControl;
     public filteredStates: Observable<City[]>;
@@ -66,16 +67,17 @@ export class BusinessMapsComponent implements OnInit {
                         categories.push({name: category.name, id: category.id});
                     }
                     else {
+                        categories.push({name: category.name, id: category.id});
                         category.subcategories.map(item => {
                             categories.push({name: item.name, id: item.id});
                         })
                     }
                 });
+                self.categories = categories;
             })
             .then(() => {
                 self.companyService.getCity()
                     .then(res => {
-                        debugger;
                         self.cities = res.cities;
                     })
             })
@@ -123,9 +125,9 @@ export class BusinessMapsComponent implements OnInit {
                             }
                             i++;
                         });
+                        self.companiesBack = self.companies;
                     });
             })
-
     }
 
     getIcon(company: CompanyI): Observable<CompanyI> {
