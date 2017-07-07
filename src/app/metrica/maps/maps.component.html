@@ -1,7 +1,8 @@
 <load-component></load-component>
 <md-sidenav-container class="example-container"
                       id="main">
-  <md-sidenav #sidenav class="example-sidenav">
+  <md-sidenav #sidenav
+              class="example-sidenav">
     <div class="action">
       <div class="title-actions">
         Фильтр
@@ -90,6 +91,7 @@
               <div><b>Телефон:</b>  {{company.phone}}</div>
             </div>
             <div><b>Категории:</b>  {{company.category_string}}</div>
+            <div><b>Адрес:</b>  {{company.address.text}}</div>
           </div>
         </sebm-google-map-info-window>
       </sebm-google-map-marker>

@@ -25,13 +25,15 @@ import {BaThemeSpinner} from "../../service/baThemeSpinner.service";
 
 
 export class BusinessMapsComponent implements OnInit {
+
     get categoryID(): number {
         return this._categoryID;
     }
+
     set categoryID(value: number) {
         this._categoryID = value;
         this.sidenav.close();
-        this.getCompanies()
+        this.getCompanies();
     }
 
 
@@ -41,13 +43,13 @@ export class BusinessMapsComponent implements OnInit {
     public companies: CompanyI[] = [];
     public companiesBack: CompanyI[] = [];
     private categories: Array<{ name: string, id: number }> = [];
-    protected cities: City[]= [];
+    protected cities: City[] = [];
     public stateCtrl: FormControl;
     public filteredStates: Observable<City[]>;
     private _categoryID: number = 0;
     private cityID: number = 0;
     public like: string = '';
-    @ViewChild ('sidenav')
+    @ViewChild('sidenav')
     sidenav: MdSidenav;
     public defaultCity: City;
     private date: Date;
@@ -61,16 +63,17 @@ export class BusinessMapsComponent implements OnInit {
             id: 0
         };
         this.stateCtrl = new FormControl();
-            this.filteredStates = this.stateCtrl.valueChanges
-                .startWith(null)
-                .map(user => user && typeof user === 'object' ? user.name : user)
-                .map(name => name ? this.filter(name) : this.cities.slice());
+        this.filteredStates = this.stateCtrl.valueChanges
+            .startWith(null)
+            .map(user => user && typeof user === 'object' ? user.name : user)
+            .map(name => name ? this.filter(name) : this.cities.slice());
     }
+
     public filter(name: string): City[] {
         return this.cities.filter(option => new RegExp(`^${name}`, 'gi').test(option.name));
     }
 
-    public displayFn(city: City): string| City {
+    public displayFn(city: City): string | City {
         let self = this;
         if (city !== null) {
             self.cityID = city.id;
@@ -78,7 +81,7 @@ export class BusinessMapsComponent implements OnInit {
         return city ? city.name : city;
     }
 
-    public onCity(event, city: City){
+    public onCity(event, city: City) {
         debugger;
         this.cityID = city.id;
         this.sidenav.close();
@@ -99,8 +102,8 @@ export class BusinessMapsComponent implements OnInit {
         self._state.showManager();
         self._state.hideGeneric('main');
         self.companies = [];
-        self.companyService.getCompanies(0, 300, self.cityID===undefined?0:self.cityID,
-            self.categoryID===undefined?0:self.categoryID, self.like)
+        self.companyService.getCompanies(0, 300, self.cityID === undefined ? 0 : self.cityID,
+            self.categoryID === undefined ? 0 : self.categoryID, self.like)
             .then(res => {
                 let i: number = 0;
                 res.map(company => {
@@ -134,8 +137,6 @@ export class BusinessMapsComponent implements OnInit {
                 self.companiesBack = self.companies;
             });
     }
-
-
 
 
     ngOnInit() {
@@ -181,7 +182,7 @@ export class BusinessMapsComponent implements OnInit {
                         observer.next(company);
                     });
             }
-            else{
+            else {
                 company.logo = 'assets/icon/Marker.png';
                 observer.next(company);
             }
@@ -214,11 +215,12 @@ export class BusinessMapsComponent implements OnInit {
         self.companies = [];
         let date: Date = new Date();
         let dateNumber: number;
+        let dateNumber2: number;
         switch (event) {
             case '1':
                 date.setHours(0, 0);
                 dateNumber = date.getTime() - 86400000;
-                let dateNumber2: number = date.getTime();
+                dateNumber2 = date.getTime();
                 self.companiesBack.map(company => {
                     if (company.date > dateNumber && dateNumber2 > company.date) {
                         self.companies.push(company);
@@ -235,12 +237,44 @@ export class BusinessMapsComponent implements OnInit {
                 });
                 break;
             case '3':
+                date.setHours(0, 0);
+                dateNumber = date.getTime() - 86400000*7;
+                dateNumber2 = date.getTime();
+                self.companiesBack.map(company => {
+                    if (company.date > dateNumber && dateNumber2 > company.date) {
+                        self.companies.push(company);
+                    }
+                });
                 break;
             case '4':
+                date.setHours(0, 0);
+                dateNumber = date.getTime() - 86400000*30;
+                dateNumber2 = date.getTime();
+                self.companiesBack.map(company => {
+                    if (company.date > dateNumber && dateNumber2 > company.date) {
+                        self.companies.push(company);
+                    }
+                });
                 break;
             case '5':
+                date.setHours(0, 0);
+                dateNumber = date.getTime() - 86400000*90;
+                dateNumber2 = date.getTime();
+                self.companiesBack.map(company => {
+                    if (company.date > dateNumber && dateNumber2 > company.date) {
+                        self.companies.push(company);
+                    }
+                });
                 break;
             case '6':
+                date.setHours(0, 0);
+                dateNumber = date.getTime() - 86400000*365;
+                dateNumber2 = date.getTime();
+                self.companiesBack.map(company => {
+                    if (company.date > dateNumber && dateNumber2 > company.date) {
+                        self.companies.push(company);
+                    }
+                });
                 break;
         }
         debugger;
