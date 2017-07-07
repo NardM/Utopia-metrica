@@ -39,6 +39,7 @@
 
   export interface    CompanyI {
     role: number;
+    date: number;
     balance: number;
     categories: number[];
     search_region_id: number;

@@ -18,6 +18,7 @@ import {ClientService} from "./service/client.service";
 import {BaThemeSpinner} from "../service/baThemeSpinner.service";
 import {LoadScrollComponent} from "../components/load-scroll/load-scroll.component";
 import {LoadComponentComponent} from "../components/load-component/load-component.component";
+import { ChartsModule } from 'ng2-charts';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import {LoadComponentComponent} from "../components/load-component/load-componen
     JsonpModule,
     ReactiveFormsModule,
     CommonModule,
+    ChartsModule,
     MetricRoutingModule,
     AgmCoreModule.forRoot({
       apiKey: "AIzaSyCxiuwoUIExQq3LaN5Kj-vNBDeyus6-t7U",
