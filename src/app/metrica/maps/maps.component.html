@@ -108,26 +108,27 @@
       </div>
 
       <div class="button-toggle">
-        <md-button-toggle-group #group="mdButtonToggleGroup">
+        <md-button-toggle-group #group="mdButtonToggleGroup"
+                                (change)="onDateCompany(group.value)">
           <div style="display: flex">
-            <md-button-toggle value="left">
+            <md-button-toggle value="1">
               Вчера
             </md-button-toggle>
-            <md-button-toggle value="center">
+            <md-button-toggle value="2">
               Сегодня
             </md-button-toggle>
-            <md-button-toggle value="right">
+            <md-button-toggle value="3">
               Неделя
             </md-button-toggle>
           </div>
           <div style="display: flex">
-            <md-button-toggle value="justify">
+            <md-button-toggle value="4">
               Месяц
             </md-button-toggle>
-            <md-button-toggle value="justify1">
+            <md-button-toggle value="5">
               Квартал
             </md-button-toggle>
-            <md-button-toggle value="justify2">
+            <md-button-toggle value="6">
               Год
             </md-button-toggle>
           </div>
@@ -137,6 +138,7 @@
       <div class="date-picker">
         <md-input-container class="example-full-width">
           <input mdInput
+                 [(ngModel)]="date"
                  [mdDatepicker]="picker"
                  placeholder="Выберите дату">
           <button mdSuffix
@@ -144,6 +146,7 @@
           </button>
         </md-input-container>
         <md-datepicker touchUi="true"
+                       (selectedChanged)="onDateCompanyPicker($event)"
                        #picker></md-datepicker>
       </div>
 

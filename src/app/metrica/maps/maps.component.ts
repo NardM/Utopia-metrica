@@ -50,10 +50,12 @@ export class BusinessMapsComponent implements OnInit {
     @ViewChild ('sidenav')
     sidenav: MdSidenav;
     public defaultCity: City;
+    private date: Date;
 
     constructor(private companyService: CompanyService,
                 private _state: BaThemeSpinner,
                 private service: ConstService) {
+        this.date = new Date();
         this.defaultCity = <City>{
             name: 'Все города',
             id: 0
@@ -185,6 +187,63 @@ export class BusinessMapsComponent implements OnInit {
             }
 
         });
+    }
+
+    public onDateCompanyPicker(event) {
+        let self = this;
+        debugger;
+        self.companies = [];
+        let date = new Date(event);
+        let dateNumber: number;
+        date.setHours(0, 0);
+        dateNumber = date.getTime();
+        let dateNumber2: number = date.getTime() + 86400000;
+        self.companiesBack.map(company => {
+            if (company.date > dateNumber && company.date < dateNumber2) {
+                debugger;
+                self.companies.push(company);
+            }
+        });
+
+        debugger;
+
+    }
+
+    public onDateCompany(event: string) {
+        let self = this;
+        self.companies = [];
+        let date: Date = new Date();
+        let dateNumber: number;
+        switch (event) {
+            case '1':
+                date.setHours(0, 0);
+                dateNumber = date.getTime() - 86400000;
+                let dateNumber2: number = date.getTime();
+                self.companiesBack.map(company => {
+                    if (company.date > dateNumber && dateNumber2 > company.date) {
+                        self.companies.push(company);
+                    }
+                });
+                break;
+            case '2':
+                date.setHours(0, 0);
+                dateNumber = date.getTime();
+                self.companiesBack.map(company => {
+                    if (company.date > dateNumber) {
+                        self.companies.push(company);
+                    }
+                });
+                break;
+            case '3':
+                break;
+            case '4':
+                break;
+            case '5':
+                break;
+            case '6':
+                break;
+        }
+        debugger;
     }
 
     private   setCurrentPosition() {
