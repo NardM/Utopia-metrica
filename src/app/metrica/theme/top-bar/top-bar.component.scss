@@ -1,20 +1,20 @@
 @import "../style";
 header{
-  padding: 4px;
-
+  padding: 9px;
   font-size: 28px;
-  color: white;
-  background-color: $defaultColor;
-  border-bottom: 1px solid white;
+  color: #363636;
+  background-color: white;
+  border-bottom: 1px solid rgba(54, 54, 54, 0.48);
+  min-height: 60px;
   div{
     margin-left: 1%;
     display: flex;
     align-items: center;
+    color: #363636;
   }
 
   md-icon{
     cursor: pointer;
-    color: white;
     font-size: 28px;
   }
   md-icon:hover{

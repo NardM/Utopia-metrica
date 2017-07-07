@@ -8,7 +8,7 @@ import {UserComponent} from "./metric.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {JsonpModule, HttpModule} from "@angular/http";
 import {AgmCoreModule} from "angular2-google-maps/core";
-import {MaterialModule} from "@angular/material";
+import {MaterialModule, MdNativeDateModule} from "@angular/material";
 import {BusinessMapsComponent} from "./maps/maps.component";
 import {TopBarComponent} from "./theme/top-bar/top-bar.component";
 import {GlobalState} from "./global.state";
@@ -36,6 +36,7 @@ import { ChartsModule } from 'ng2-charts';
       region: 'ru'
     }),
     MaterialModule,
+    MdNativeDateModule
   ],
   declarations: [
     UserComponent,

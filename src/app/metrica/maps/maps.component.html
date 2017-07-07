@@ -53,9 +53,19 @@
     <button md-mini-fab
             color="primary"
             mdTooltip="Фильтр"
+            [mdTooltipPosition]="'before'"
             (click)="sidenav.open()"
             class="menu-actions">
       <md-icon>reorder</md-icon>
+    </button>
+    <button md-mini-fab
+            color="primary"
+            style="margin-top: 4em;"
+            [mdTooltipPosition]="'before'"
+            mdTooltip="Фильтр по дате"
+            (click)="sidenavDate.open()"
+            class="menu-actions">
+      <md-icon>date_range</md-icon>
     </button>
 
 
@@ -88,6 +98,58 @@
     </sebm-google-map>
 
   </div>
+  <md-sidenav #sidenavDate
+              [align]="'end'"
+              style="width: 30%;"
+              class="example-sidenav">
+    <div class="action">
+      <div class="title-actions">
+        Фильтр по дате
+      </div>
+
+      <div class="button-toggle">
+        <md-button-toggle-group #group="mdButtonToggleGroup">
+          <div style="display: flex">
+            <md-button-toggle value="left">
+              Вчера
+            </md-button-toggle>
+            <md-button-toggle value="center">
+              Сегодня
+            </md-button-toggle>
+            <md-button-toggle value="right">
+              Неделя
+            </md-button-toggle>
+          </div>
+          <div style="display: flex">
+            <md-button-toggle value="justify">
+              Месяц
+            </md-button-toggle>
+            <md-button-toggle value="justify1">
+              Квартал
+            </md-button-toggle>
+            <md-button-toggle value="justify2">
+              Год
+            </md-button-toggle>
+          </div>
+        </md-button-toggle-group>
+      </div>
+
+      <div class="date-picker">
+        <md-input-container class="example-full-width">
+          <input mdInput
+                 [mdDatepicker]="picker"
+                 placeholder="Выберите дату">
+          <button mdSuffix
+                  [mdDatepickerToggle]="picker">
+          </button>
+        </md-input-container>
+        <md-datepicker touchUi="true"
+                       #picker></md-datepicker>
+      </div>
+
+    </div>
+  </md-sidenav>
+
 
 </md-sidenav-container>
 

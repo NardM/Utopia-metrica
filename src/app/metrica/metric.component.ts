@@ -15,7 +15,7 @@ import { Component } from '@angular/core';
         <main STYLE="position: fixed;
     display: block;
     width: 100%;
-    margin-top: 50px;"> 
+    margin-top: 60px;"> 
             <left-bar>
                 <router-outlet></router-outlet>
             </left-bar>
