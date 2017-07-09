@@ -8,7 +8,7 @@ import {UserComponent} from "./metric.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {JsonpModule, HttpModule} from "@angular/http";
 import {AgmCoreModule} from "angular2-google-maps/core";
-import {MaterialModule, MdNativeDateModule} from "@angular/material";
+import {MaterialModule, MdNativeDateModule, MdSortModule, MdTableModule} from "@angular/material";
 import {BusinessMapsComponent} from "./maps/maps.component";
 import {TopBarComponent} from "./theme/top-bar/top-bar.component";
 import {GlobalState} from "./global.state";
@@ -19,7 +19,8 @@ import {BaThemeSpinner} from "../service/baThemeSpinner.service";
 import {LoadScrollComponent} from "../components/load-scroll/load-scroll.component";
 import {LoadComponentComponent} from "../components/load-component/load-component.component";
 import { ChartsModule } from 'ng2-charts';
-
+import {TablePaginationExample} from "./companies-table/companies-table.component";
+import {CdkTableModule} from '@angular/cdk';
 
 @NgModule({
   imports: [
@@ -36,7 +37,10 @@ import { ChartsModule } from 'ng2-charts';
       region: 'ru'
     }),
     MaterialModule,
-    MdNativeDateModule
+    MdNativeDateModule,
+    MdSortModule,
+    MdTableModule,
+    CdkTableModule
   ],
   declarations: [
     UserComponent,
@@ -44,7 +48,8 @@ import { ChartsModule } from 'ng2-charts';
     BusinessMapsComponent,
     TopBarComponent,
     LeftBarComponent,
-    LoadScrollComponent
+    LoadScrollComponent,
+    TablePaginationExample
 
   ],
   entryComponents: [

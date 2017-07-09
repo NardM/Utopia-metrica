@@ -34,5 +34,8 @@ export class LeftBarComponent {
         {
             href: './maps', label: 'Карта', icon: 'map'
         },
+        {
+            href: './table', label: 'Таблицы', icon: 'tab'
+        },
     ];
 }
