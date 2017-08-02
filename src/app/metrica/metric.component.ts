@@ -74,7 +74,7 @@ export class UserComponent {
     }
     private audioNotification(): void {
         let audio = new Audio(); // Создаём новый элемент Audio
-        audio.src = 'assets/audio/notification.mp3'; // Указываем путь к звуку "клика"
+        audio.src = 'assets/audio/new.mp3'; // Указываем путь к звуку "клика"
         audio.autoplay = true; // Автоматически запускаем
     }
 }
