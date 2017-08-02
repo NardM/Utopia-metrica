@@ -21,6 +21,9 @@ import {LoadComponentComponent} from "../components/load-component/load-componen
 import { ChartsModule } from 'ng2-charts';
 import {TablePaginationExample} from "./companies-table/companies-table.component";
 import {CdkTableModule} from '@angular/cdk';
+import {BusinessTableComponent} from "./table/maps.component";
+import {RequestMetricHub} from "../service/hubs/RequestHub";
+import {MetricaStore} from "./maps/maps.store";
 
 @NgModule({
   imports: [
@@ -49,7 +52,8 @@ import {CdkTableModule} from '@angular/cdk';
     TopBarComponent,
     LeftBarComponent,
     LoadScrollComponent,
-    TablePaginationExample
+    TablePaginationExample,
+    BusinessTableComponent
 
   ],
   entryComponents: [
@@ -58,7 +62,9 @@ import {CdkTableModule} from '@angular/cdk';
     GlobalState,
     CompanyService,
     ClientService,
-    BaThemeSpinner
+    BaThemeSpinner,
+    RequestMetricHub,
+    MetricaStore
   ],
   exports: []
 

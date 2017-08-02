@@ -1,7 +1,9 @@
 /**
  * Created by nardm on 08.12.16.
  */
-import { Component } from '@angular/core';
+import {ChangeDetectorRef, Component} from '@angular/core';
+import {RequestMetricHub} from "../service/hubs/RequestHub";
+import {MetricaStore} from "./maps/maps.store";
 
 @Component({
   /*templateUrl: 'manage.component.html',
@@ -59,4 +61,20 @@ import { Component } from '@angular/core';
 
 })
 export class UserComponent {
+    constructor(private hub: RequestMetricHub,
+                private cdRef:ChangeDetectorRef,
+                private store: MetricaStore) {
+        this.hub.newCompany
+            .subscribe(res => {
+                debugger;
+                this.store.Added(res);
+                this.cdRef.detectChanges();
+                this.audioNotification();
+            });
+    }
+    private audioNotification(): void {
+        let audio = new Audio(); // Создаём новый элемент Audio
+        audio.src = 'assets/audio/notification.mp3'; // Указываем путь к звуку "клика"
+        audio.autoplay = true; // Автоматически запускаем
+    }
 }

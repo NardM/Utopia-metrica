@@ -1,5 +1,12 @@
 <div class="example-container mat-elevation-z8">
 
+    <div class="example-header">
+        <md-input-container floatPlaceholder="never">
+            <input mdInput #filter placeholder="Filter users">
+        </md-input-container>
+    </div>
+
+
     <md-table #table [dataSource]="dataSource">
 
         <!--- Note that these columns can be defined in any order.

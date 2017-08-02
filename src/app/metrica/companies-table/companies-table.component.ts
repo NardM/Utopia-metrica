@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import {DataSource} from '@angular/cdk';
 import {MdPaginator} from '@angular/material';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
@@ -6,6 +6,12 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/observable/merge';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/observable/fromEvent';
+import {MdSort} from '@angular/material';
+import {CompanyService} from "../service/company.service";
+import {CompanyI} from "../model/company";
 
 @Component({
     selector: 'companies-table',
@@ -14,61 +20,69 @@ import 'rxjs/add/operator/map';
 })
 export class TablePaginationExample {
     displayedColumns = ['userId', 'userName', 'progress', 'color'];
-    exampleDatabase = new ExampleDatabase();
+    exampleDatabase;
     dataSource: ExampleDataSource | null;
 
     @ViewChild(MdPaginator) paginator: MdPaginator;
+    @ViewChild('filter') filter: ElementRef;
+
+
+    private _categoryID: number = 0;
+    private cityID: number = 0;
+    public like: string = '';
+    public companies: CompanyI[] = [];
+
+    constructor(private companyService: CompanyService) {
+        let self = this;
+        self.companyService.getCompanies(0, 1000, self.cityID, self._categoryID, self.like)
+            .then(res => {
+                debugger;
+                self.exampleDatabase = new ExampleDatabase(res);
+                self.dataSource = new ExampleDataSource(self.exampleDatabase, self.paginator);
+                Observable.fromEvent(self.filter.nativeElement, 'keyup')
+                    .debounceTime(150)
+                    .distinctUntilChanged()
+                    .subscribe(() => {
+                        if (!self.dataSource) {
+                            return;
+                        }
+                        self.dataSource.filter = self.filter.nativeElement.value;
+                    });
+            });
+    }
 
     ngOnInit() {
-        this.dataSource = new ExampleDataSource(this.exampleDatabase, this.paginator);
+
     }
 }
 
-/** Constants used to fill up our data base. */
-const COLORS = ['maroon', 'red', 'orange', 'yellow', 'olive', 'green', 'purple',
-    'fuchsia', 'lime', 'teal', 'aqua', 'blue', 'navy', 'black', 'gray'];
-const NAMES = ['Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack',
-    'Charlotte', 'Theodore', 'Isla', 'Oliver', 'Isabella', 'Jasper',
-    'Cora', 'Levi', 'Violet', 'Arthur', 'Mia', 'Thomas', 'Elizabeth'];
 
-export interface UserData {
-    id: string;
-    name: string;
-    progress: string;
-    color: string;
-}
+
 
 /** An example database that the data source uses to retrieve data for the table. */
 export class ExampleDatabase {
     /** Stream that emits whenever the data has been modified. */
-    dataChange: BehaviorSubject<UserData[]> = new BehaviorSubject<UserData[]>([]);
-    get data(): UserData[] { return this.dataChange.value; }
+    dataChange: BehaviorSubject<CompanyI[]> ;
+    get data(): CompanyI[] { return this.dataChange.value; }
 
-    constructor() {
+    constructor(private companies: CompanyI[]) {
+        debugger;
+        this.dataChange = new BehaviorSubject<CompanyI[]>(companies);
+        companies.map(res=>{
+            this.addUser(res);
+        })
         // Fill up the database with 100 users.
-        for (let i = 0; i < 100; i++) { this.addUser(); }
     }
 
+
+
     /** Adds a new user to the database. */
-    addUser() {
+    addUser(res: CompanyI) {
         const copiedData = this.data.slice();
-        copiedData.push(this.createNewUser());
+        copiedData.push(res);
         this.dataChange.next(copiedData);
     }
 
-    /** Builds and returns a new User. */
-    private createNewUser() {
-        const name =
-            NAMES[Math.round(Math.random() * (NAMES.length - 1))] + ' ' +
-            NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) + '.';
-
-        return {
-            id: (this.data.length + 1).toString(),
-            name: name,
-            progress: Math.round(Math.random() * 100).toString(),
-            color: COLORS[Math.round(Math.random() * (COLORS.length - 1))]
-        };
-    }
 }
 
 /**
@@ -79,25 +93,37 @@ export class ExampleDatabase {
  * should be rendered.
  */
 export class ExampleDataSource extends DataSource<any> {
-    constructor(private _exampleDatabase: ExampleDatabase, private _paginator: MdPaginator) {
+    _filterChange = new BehaviorSubject('');
+    get filter(): string { return this._filterChange.value; }
+    set filter(filter: string) { this._filterChange.next(filter); }
+
+    constructor(private _exampleDatabase: ExampleDatabase,
+                private _paginator: MdPaginator) {
         super();
     }
 
     /** Connect function called by the table to retrieve one stream containing the data to render. */
-    connect(): Observable<UserData[]> {
+    connect(): Observable<CompanyI[]> {
+        debugger;
         const displayDataChanges = [
             this._exampleDatabase.dataChange,
             this._paginator.page,
+            this._filterChange,
         ];
 
         return Observable.merge(...displayDataChanges).map(() => {
-            const data = this._exampleDatabase.data.slice();
-
-            // Grab the page's slice of data.
             const startIndex = this._paginator.pageIndex * this._paginator.pageSize;
-            return data.splice(startIndex, this._paginator.pageSize);
+            return this._exampleDatabase.data.slice(startIndex, this._paginator.pageSize)
+                .filter((item: CompanyI) => {
+                let searchStr = (item.company.name + item.master.first_name + item.master.last_name)
+                    .toLowerCase();
+                return searchStr.indexOf(this.filter.toLowerCase()) != -1;
+            });
+            // Grab the page's slice of data.
         });
     }
 
-    disconnect() {}
+    disconnect() {
+    }
+
 }

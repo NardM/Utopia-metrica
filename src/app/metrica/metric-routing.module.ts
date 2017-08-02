@@ -6,6 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 import {UserComponent} from "./metric.component";
 import {BusinessMapsComponent} from "./maps/maps.component";
 import {TablePaginationExample} from "./companies-table/companies-table.component";
+import {BusinessTableComponent} from "./table/maps.component";
 
 
 const managerRoutes: Routes = [
@@ -18,7 +19,8 @@ const managerRoutes: Routes = [
                 children: [
                   { path: '', component: BusinessMapsComponent },
                   { path: 'maps', component: BusinessMapsComponent },
-                  { path: 'table', component: TablePaginationExample },
+                  { path: 'tabl', component: TablePaginationExample },
+                  { path: 'table', component: BusinessTableComponent },
                 ]
             }
         ]

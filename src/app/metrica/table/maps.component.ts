@@ -13,7 +13,6 @@ declare var google:any;
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/map';
 import {BaThemeSpinner} from "../../service/baThemeSpinner.service";
-import {MetricaStore, StoreAction, StoreItem} from "./maps.store";
 
 
 @Component({
@@ -22,7 +21,10 @@ import {MetricaStore, StoreAction, StoreItem} from "./maps.store";
     styleUrls: ['maps.component.scss'],
 })
 
-export class BusinessMapsComponent implements OnInit {
+
+
+
+export class BusinessTableComponent implements OnInit {
 
     get categoryID(): number {
         return this._categoryID;
@@ -54,17 +56,12 @@ export class BusinessMapsComponent implements OnInit {
 
     constructor(private companyService: CompanyService,
                 private _state: BaThemeSpinner,
-                private store: MetricaStore,
                 private service: ConstService) {
         this.date = new Date();
         this.defaultCity = <City>{
             name: 'Все города',
             id: 0
         };
-        this.store.createObserver()
-            .subscribe(res =>
-                this.newStoreItem(res));
-
         this.stateCtrl = new FormControl();
         this.filteredStates = this.stateCtrl.valueChanges
             .startWith(null)
@@ -72,30 +69,8 @@ export class BusinessMapsComponent implements OnInit {
             .map(name => name ? this.filter(name) : this.cities.slice());
     }
 
-    newStoreItem(res: StoreItem<CompanyI>) {
-        let self = this;
-        switch (res.action) {
-            case StoreAction.Inserted:
-                debugger;
-                let categoriesI: string = '';
-                res.item.categories.map(category => {
-                    self.categories.map(r => {
-                        if (r.id === category) {
-                            categoriesI += r.name + ', ';
-                        }
-                    });
-                });
-                res.item.category_string = categoriesI;
-                self.companies.push(res.item);
-                break;
-            default:
-                break;
-        }
-    }
-
     public filter(name: string): City[] {
-        return this.cities.filter(option => new RegExp(`^${name}`, 'gi')
-            .test(option.name));
+        return this.cities.filter(option => new RegExp(`^${name}`, 'gi').test(option.name));
     }
 
     public displayFn(city: City): string | City {
@@ -127,48 +102,36 @@ export class BusinessMapsComponent implements OnInit {
         self._state.showManager();
         self._state.hideGeneric('main');
         self.companies = [];
-        self.companyService.getCompanies(0, 1000,
-            self.cityID === undefined ? 0 : self.cityID,
+        self.companyService.getCompanies(0, 1000, self.cityID === undefined ? 0 : self.cityID,
             self.categoryID === undefined ? 0 : self.categoryID, self.like)
             .then(res => {
                 let i: number = 0;
-                console.log(res.length);
                 res.map(company => {
-                    if (company.address.location === null ||
+                    if (company.address.location == null ||
                         company.address.location === undefined) {
                         res.splice(i, 1);
                     }
                     i++;
                 });
-                console.log(res.length);
-                debugger;
                 i = 0;
-                try {
-                    res.map(company => {
-                        if (company.address.location) {
-                            if (company.address.location.lng !== null &&
-                                company.address.location.lng !== undefined &&
-                                company.address.location.lat !== null &&
-                                company.address.location.lat !== undefined) {
-                                let categoriesI: string = '';
-                                company.categories.map(category => {
-                                    self.categories.map(r => {
-                                        if (r.id === category) {
-                                            categoriesI += r.name + ', ';
-                                        }
-                                    });
-                                });
-                                company.category_string = categoriesI;
-                                self.companies.push(company);
-                            }
-                        }
-                        i++;
-                    });
-                }
-                catch (e) {
-                    console.log(e);
-                }
-                console.log(res.length);
+                res.map(company => {
+                    if (company.address.location.lng !== null &&
+                        company.address.location.lng !== undefined &&
+                        company.address.location.lat !== null &&
+                        company.address.location.lat !== undefined) {
+                        let categoriesI: string = '';
+                        company.categories.map(category => {
+                            self.categories.map(r => {
+                                if (r.id === category) {
+                                    categoriesI += r.name + ', ';
+                                }
+                            });
+                        });
+                        company.category_string = categoriesI;
+                        self.companies.push(company);
+                    }
+                    i++;
+                });
                 self._state.hideManager();
                 self._state.showGeneric('main');
                 self.companiesBack = self.companies;
@@ -183,8 +146,7 @@ export class BusinessMapsComponent implements OnInit {
         self.latitude = 55.7993562;
         self.longitude = 49.1059988;
         self.setCurrentPosition();
-        let categories: Array<{ name: string, id: number }> =
-            [{name: 'Все категории', id: 0}];
+        let categories: Array<{ name: string, id: number }> = [{name: 'Все категории', id: 0}];
         self.companyService.getCategories()
             .then((res: CategoryI[]) => {
                 res.map(category => {
@@ -211,7 +173,7 @@ export class BusinessMapsComponent implements OnInit {
             })
     }
 
-    private getIcon(company: CompanyI): Observable<CompanyI> {
+    getIcon(company: CompanyI): Observable<CompanyI> {
         return Observable.create((observer: Observer<CompanyI>) => {
             if (company.logo_hash) {
                 this.service.getAvatar(`v1/company/${company.id}/logo`)
@@ -276,7 +238,7 @@ export class BusinessMapsComponent implements OnInit {
                 break;
             case '3':
                 date.setHours(0, 0);
-                dateNumber = date.getTime() - 86400000 * 7;
+                dateNumber = date.getTime() - 86400000*7;
                 dateNumber2 = date.getTime();
                 self.companiesBack.map(company => {
                     if (company.date > dateNumber && dateNumber2 > company.date) {
@@ -286,7 +248,7 @@ export class BusinessMapsComponent implements OnInit {
                 break;
             case '4':
                 date.setHours(0, 0);
-                dateNumber = date.getTime() - 86400000 * 30;
+                dateNumber = date.getTime() - 86400000*30;
                 dateNumber2 = date.getTime();
                 self.companiesBack.map(company => {
                     if (company.date > dateNumber && dateNumber2 > company.date) {
@@ -296,7 +258,7 @@ export class BusinessMapsComponent implements OnInit {
                 break;
             case '5':
                 date.setHours(0, 0);
-                dateNumber = date.getTime() - 86400000 * 90;
+                dateNumber = date.getTime() - 86400000*90;
                 dateNumber2 = date.getTime();
                 self.companiesBack.map(company => {
                     if (company.date > dateNumber && dateNumber2 > company.date) {
@@ -306,7 +268,7 @@ export class BusinessMapsComponent implements OnInit {
                 break;
             case '6':
                 date.setHours(0, 0);
-                dateNumber = date.getTime() - 86400000 * 365;
+                dateNumber = date.getTime() - 86400000*365;
                 dateNumber2 = date.getTime();
                 self.companiesBack.map(company => {
                     if (company.date > dateNumber && dateNumber2 > company.date) {

@@ -1,0 +1,154 @@
+<load-component></load-component>
+<md-sidenav-container class="example-container"
+                      id="main">
+  <md-sidenav #sidenav
+              class="example-sidenav">
+    <div class="action">
+      <div class="title-actions">
+        Фильтр
+      </div>
+      <div *ngIf="cities"
+           class="cities">
+        <md-input-container>
+          <input mdInput
+                 placeholder="Город"
+                 [mdAutocomplete]="auto"
+                 [formControl]="stateCtrl">
+        </md-input-container>
+
+        <md-autocomplete #auto="mdAutocomplete"
+                         [displayWith]="displayFn">
+          <md-option (onSelectionChange)="onCity($event, defaultCity)"
+                     [value]="defaultCity">
+            {{defaultCity.name}}
+          </md-option>
+          <md-option *ngFor="let state of filteredStates | async"
+                     (onSelectionChange)="onCity($event, state)"
+                     [value]="state">
+            {{ state.name }}
+          </md-option>
+        </md-autocomplete>
+      </div>
+      <div class="categories">
+        <md-select placeholder="Категория"
+                   [(ngModel)]="categoryID">
+          <md-option *ngFor="let category of categories"
+                     [value]="category.id">
+            {{ category.name }}
+          </md-option>
+        </md-select>
+      </div>
+      <div class="names">
+        <md-input-container>
+          <input mdInput
+                 type="search"
+                 #name
+                 (keyup)="onLikeName(name.value)"
+                 placeholder="Компания">
+        </md-input-container>
+      </div>
+    </div>
+  </md-sidenav>
+
+  <div class="example-sidenav-content">
+    <button md-mini-fab
+            color="primary"
+            mdTooltip="Фильтр"
+            [mdTooltipPosition]="'before'"
+            (click)="sidenav.open()"
+            class="menu-actions">
+      <md-icon>reorder</md-icon>
+    </button>
+    <button md-mini-fab
+            color="primary"
+            style="margin-top: 4em;"
+            [mdTooltipPosition]="'before'"
+            mdTooltip="Фильтр по дате"
+            (click)="sidenavDate.open()"
+            class="menu-actions">
+      <md-icon>date_range</md-icon>
+    </button>
+
+
+
+    <table cellpadding="7" style="    position: absolute;
+    display: block;
+    max-height: calc(100vh - 13em);
+    margin-bottom: 5em;
+    top: 0;">
+      <caption>Компании</caption>
+        <tbody style="display: block; margin-bottom: 2em">
+        <tr>
+            <th>Компания</th>
+            <th>
+                Категории
+            </th>
+        </tr>
+        <tr *ngFor="let company of companies">
+            <td *ngIf="company.master">Мастер: {{company.master.first_name}} {{company.master.last_name}}</td>
+            <td *ngIf="company.company">Компания: {{company.company.name}}</td>
+            <td>Категории: {{company.category_string}}</td>
+        </tr>
+        </tbody>
+
+    </table>
+  </div>
+  <md-sidenav #sidenavDate
+              [align]="'end'"
+              style="width: 30%;"
+              class="example-sidenav">
+    <div class="action">
+      <div class="title-actions">
+        Фильтр по дате
+      </div>
+
+      <div class="button-toggle">
+        <md-button-toggle-group #group="mdButtonToggleGroup"
+                                (change)="onDateCompany(group.value)">
+          <div style="display: flex">
+            <md-button-toggle value="1">
+              Вчера
+            </md-button-toggle>
+            <md-button-toggle value="2">
+              Сегодня
+            </md-button-toggle>
+            <md-button-toggle value="3">
+              Неделя
+            </md-button-toggle>
+          </div>
+          <div style="display: flex">
+            <md-button-toggle value="4">
+              Месяц
+            </md-button-toggle>
+            <md-button-toggle value="5">
+              Квартал
+            </md-button-toggle>
+            <md-button-toggle value="6">
+              Год
+            </md-button-toggle>
+          </div>
+        </md-button-toggle-group>
+      </div>
+
+      <div class="date-picker">
+        <md-input-container class="example-full-width">
+          <input mdInput
+                 [(ngModel)]="date"
+                 [mdDatepicker]="picker"
+                 placeholder="Выберите дату">
+          <button mdSuffix
+                  [mdDatepickerToggle]="picker">
+          </button>
+        </md-input-container>
+        <md-datepicker touchUi="true"
+                       (selectedChanged)="onDateCompanyPicker($event)"
+                       #picker></md-datepicker>
+      </div>
+
+    </div>
+  </md-sidenav>
+
+
+</md-sidenav-container>
+
+
