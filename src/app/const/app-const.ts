@@ -7,5 +7,5 @@ export class Consts{
     static os_version: string = "Ubuntu 16.04";
     static app_version: string="1.0";
     static app_type: string="web";
-    public static baseURL: string = "http://smartapi.ru/api/";
+    public static baseURL: string = "http://r.smartapi.ru/api/";
 }

@@ -15,7 +15,7 @@ export class RequestMetricHub {
 
   constructor() {
     let connection = jQuery.connection;
-    let host = "smartapi.ru";
+    let host = "r.smartapi.ru";
     jQuery.connection.hub.url = 'http://' + host + '/signalr';
     debugger;
     let metricaHub = connection.metrica;
