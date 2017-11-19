@@ -102,7 +102,7 @@ export class BusinessTableComponent implements OnInit {
         self._state.showManager();
         self._state.hideGeneric('main');
         self.companies = [];
-        self.companyService.getCompanies(0, 1000, self.cityID === undefined ? 0 : self.cityID,
+        self.companyService.getCompanies(0, 1000    , self.cityID === undefined ? 0 : self.cityID,
             self.categoryID === undefined ? 0 : self.categoryID, self.like)
             .then(res => {
                 let i: number = 0;

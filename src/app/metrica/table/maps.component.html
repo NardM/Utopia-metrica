@@ -83,11 +83,15 @@
             <th>
                 Категории
             </th>
+          <th>
+                Номер
+            </th>
         </tr>
         <tr *ngFor="let company of companies">
             <td *ngIf="company.master">Мастер: {{company.master.first_name}} {{company.master.last_name}}</td>
             <td *ngIf="company.company">Компания: {{company.company.name}}</td>
-            <td>Категории: {{company.category_string}}</td>
+            <td>{{company.category_string}}</td>
+            <td>{{company.phone}}</td>
         </tr>
         </tbody>
 
